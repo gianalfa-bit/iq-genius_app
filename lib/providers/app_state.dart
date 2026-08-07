@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/test_models.dart';
-import '../main.dart'; // For ViewState
 import '../data/questions_data.dart';
+import '../data/leaderboard_data.dart';
 
 class AppState extends ChangeNotifier {
   UserProfile _user = UserProfile(
@@ -17,19 +17,30 @@ class AppState extends ChangeNotifier {
     history: [],
   );
 
-  ViewState _viewState = ViewState.home;
+  ViewState _viewState = ViewState.onboarding; 
   TestMode _activeTestMode = TestMode.quick;
   CategoryType? _activeCategory;
   List<Question> _activeQuestions = [];
   TestResult? _latestResult;
+  List<LeaderboardItem> _leaderboard = initialLeaderboard;
 
   UserProfile get user => _user;
   ViewState get viewState => _viewState;
   TestResult? get latestResult => _latestResult;
   List<Question> get activeQuestions => _activeQuestions;
+  List<LeaderboardItem> get leaderboard => _leaderboard;
 
   void setViewState(ViewState state) {
     _viewState = state;
+    notifyListeners();
+  }
+
+  void updateProfile(String name, String age, String edu) {
+    _user = _user.copyWith(
+      fullName: name,
+      ageRange: age,
+      education: edu,
+    );
     notifyListeners();
   }
 
@@ -37,7 +48,18 @@ class AppState extends ChangeNotifier {
     _activeTestMode = mode;
     _activeCategory = category;
     // Logic to pick questions based on mode
-    _activeQuestions = allQuestions.take(15).toList(); 
+    if (mode == TestMode.quick) {
+      _activeQuestions = allQuestions.take(15).toList();
+    } else if (mode == TestMode.full) {
+      // Create variations or take all
+      _activeQuestions = List.generate(40, (index) {
+        final q = allQuestions[index % allQuestions.length];
+        return q; // In real app, would clone with new ID
+      });
+    } else {
+      _activeQuestions = allQuestions.take(10).toList();
+    }
+    
     _viewState = ViewState.activeTest;
     notifyListeners();
   }
@@ -50,13 +72,45 @@ class AppState extends ChangeNotifier {
     String newLevel = _user.level;
     if (newScore >= 130) newLevel = 'Grand Master Logic';
     else if (newScore >= 120) newLevel = 'Genius Level';
+    else if (newScore >= 110) newLevel = 'Junior Logic';
 
     _user = _user.copyWith(
       iqScore: newScore,
       level: newLevel,
       completedTestsCount: _user.completedTestsCount + 1,
       history: [result, ..._user.history],
+      dailyChallengeProgress: result.testMode == TestMode.daily ? 100 : (_user.dailyChallengeProgress + 10).clamp(0, 100),
     );
+
+    // Update leaderboard if is current user
+    _leaderboard = _leaderboard.map((item) {
+      if (item.isCurrentUser) {
+        return LeaderboardItem(
+          rank: item.rank,
+          name: item.name,
+          avatarUrl: item.avatarUrl,
+          score: newScore > item.score ? newScore : item.score,
+          level: newLevel,
+          testsCount: item.testsCount + 1,
+          isCurrentUser: true,
+        );
+      }
+      return item;
+    }).toList();
+    _leaderboard.sort((a, b) => b.score.compareTo(a.score));
+    // Re-rank
+    for (int i = 0; i < _leaderboard.length; i++) {
+      final item = _leaderboard[i];
+      _leaderboard[i] = LeaderboardItem(
+        rank: i + 1,
+        name: item.name,
+        avatarUrl: item.avatarUrl,
+        score: item.score,
+        level: item.level,
+        testsCount: item.testsCount,
+        isCurrentUser: item.isCurrentUser,
+      );
+    }
 
     _viewState = ViewState.testResults;
     notifyListeners();

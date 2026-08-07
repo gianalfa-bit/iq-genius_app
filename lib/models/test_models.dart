@@ -2,6 +2,8 @@ enum CategoryType { spasial, logika, verbal, numerik }
 
 enum TestMode { quick, full, category, daily }
 
+enum ViewState { onboarding, home, activeTest, testResults, leaderboard, profile }
+
 class QuestionOption {
   final String id; // 'A', 'B', 'C', 'D'
   final String label;
@@ -136,4 +138,24 @@ class UserProfile {
       history: history ?? this.history,
     );
   }
+}
+
+class LeaderboardItem {
+  final int rank;
+  final String name;
+  final String avatarUrl;
+  final int score;
+  final String level;
+  final int testsCount;
+  final bool isCurrentUser;
+
+  LeaderboardItem({
+    required this.rank,
+    required this.name,
+    required this.avatarUrl,
+    required this.score,
+    required this.level,
+    required this.testsCount,
+    this.isCurrentUser = false,
+  });
 }

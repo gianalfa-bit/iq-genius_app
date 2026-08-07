@@ -1,0 +1,61 @@
+import '../models/test_models.dart';
+
+final List<LeaderboardItem> initialLeaderboard = [
+  LeaderboardItem(
+    rank: 1,
+    name: 'Dr. Sarah Wijaya',
+    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    score: 142,
+    level: 'Grand Master Logic',
+    testsCount: 28,
+  ),
+  LeaderboardItem(
+    rank: 2,
+    name: 'Rian Hidayat',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    score: 136,
+    level: 'Genius Level',
+    testsCount: 24,
+  ),
+  LeaderboardItem(
+    rank: 3,
+    name: 'Budi Santoso',
+    avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBt2tqDZgN4wgdVHCa7P9KS9uMlGFmEOVRElo6RGaPHVX5J4T1CRp90RYk5PX33PSOOAoCx0KT1tBmtUHEHhcHohwvn56YBMWg3UYqI2Ztsvwh_Sea2EiZdVsk3X56PpHw-MLuvTD6D0_PkIM64D9yaTpyQzgCLDp9YZ-UJHEqPazlVUfxfWTUySpnennvBU8CQ6raW31_oQOpvzIJgrcOKGAoEVyLlD6Lw9dODUJIt5FuApP_ieh8-',
+    score: 124,
+    level: 'Genius Level',
+    testsCount: 12,
+    isCurrentUser: true,
+  ),
+  LeaderboardItem(
+    rank: 4,
+    name: 'Nadia Putri',
+    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
+    score: 119,
+    level: 'Junior Logic',
+    testsCount: 15,
+  ),
+  LeaderboardItem(
+    rank: 5,
+    name: 'Ahmad Rizky',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    score: 115,
+    level: 'Junior Logic',
+    testsCount: 9,
+  ),
+  LeaderboardItem(
+    rank: 6,
+    name: 'Dewi Lestari',
+    avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&auto=format&fit=crop&q=80',
+    score: 112,
+    level: 'Above Average',
+    testsCount: 8,
+  ),
+  LeaderboardItem(
+    rank: 7,
+    name: 'Fikri Haikal',
+    avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+    score: 108,
+    level: 'Average Logic',
+    testsCount: 5,
+  ),
+];

@@ -5,6 +5,9 @@ import 'providers/app_state.dart';
 import 'screens/home_screen.dart';
 import 'screens/active_test_screen.dart';
 import 'screens/result_screen.dart';
+import 'screens/onboarding_screen.dart';
+import 'screens/leaderboard_screen.dart';
+import 'screens/profile_screen.dart';
 
 void main() {
   runApp(
@@ -25,16 +28,29 @@ class IQGeniusApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF24389C),
-          primary: const Color(0xFF24389C),
+        colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Color(0xFF24389C),
           onPrimary: Colors.white,
-          secondary: const Color(0xFF006A60),
+          primaryContainer: Color(0xFF3F51B5),
+          onPrimaryContainer: Color(0xFFCACFFF),
+          secondary: Color(0xFF006A60),
           onSecondary: Colors.white,
-          background: const Color(0xFFF9F9F9),
-          surface: const Color(0xFFF9F9F9),
-          error: const Color(0xFFBA1A1A),
-          tertiary: const Color(0xFF574000),
+          secondaryContainer: Color(0xFF85F6E5),
+          onSecondaryContainer: Color(0xFF007166),
+          tertiary: Color(0xFF574000),
+          onTertiary: Colors.white,
+          tertiaryContainer: Color(0xFF745600),
+          onTertiaryContainer: Color(0xFFFFCC55),
+          error: Color(0xFFBA1A1A),
+          onError: Colors.white,
+          background: Color(0xFFF9F9F9),
+          onBackground: Color(0xFF1A1C1C),
+          surface: Color(0xFFF9F9F9),
+          onSurface: Color(0xFF1A1C1C),
+          surfaceVariant: Color(0xFFE2E2E2),
+          onSurfaceVariant: Color(0xFF454652),
+          outline: Color(0xFF757684),
         ),
         textTheme: const TextTheme(
           displayLarge: TextStyle(
@@ -69,6 +85,12 @@ class IQGeniusApp extends StatelessWidget {
             fontWeight: FontWeight.w600,
             fontFamily: 'Inter',
           ),
+          labelMedium: TextStyle(
+            fontSize: 12,
+            height: 16 / 12,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Inter',
+          ),
         ),
       ),
       home: const MainViewRouter(),
@@ -84,16 +106,20 @@ class MainViewRouter extends StatelessWidget {
     final appState = Provider.of<AppState>(context);
 
     switch (appState.viewState) {
+      case ViewState.onboarding:
+        return const OnboardingScreen();
       case ViewState.home:
         return const HomeScreen();
       case ViewState.activeTest:
         return const ActiveTestScreen();
       case ViewState.testResults:
         return const ResultScreen();
+      case ViewState.leaderboard:
+        return const LeaderboardScreen();
+      case ViewState.profile:
+        return const ProfileScreen();
       default:
         return const HomeScreen();
     }
   }
 }
-
-enum ViewState { home, activeTest, testResults }
