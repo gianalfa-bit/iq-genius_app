@@ -103,7 +103,7 @@ class _ActiveTestScreenState extends State<ActiveTestScreen> {
                 children: [
                   CircleAvatar(
                     radius: 20,
-                    backgroundImage: NetworkImage(user.avatarUrl),
+                    backgroundImage: NetworkImage(appState.user.avatarUrl),
                   ),
                   const SizedBox(width: 12),
                   const Text(
@@ -463,7 +463,5 @@ class _ActiveTestScreenState extends State<ActiveTestScreen> {
         ),
       ),
     );
-  }
-}
   }
 }
