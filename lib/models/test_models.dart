@@ -27,6 +27,7 @@ class Question {
   final List<QuestionOption> options;
   final String correctOption; // 'A', 'B', 'C', 'D'
   final String explanation;
+  final List<String> ageRanges; // ['13-17', '18-24', '25-34', '35+']
 
   Question({
     required this.id,
@@ -37,6 +38,7 @@ class Question {
     required this.options,
     required this.correctOption,
     required this.explanation,
+    this.ageRanges = const ['13-17', '18-24', '25-34', '35+'],
   });
 }
 

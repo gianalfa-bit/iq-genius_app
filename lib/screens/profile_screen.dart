@@ -83,7 +83,7 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: OutlinedButton.icon(
-                            onPressed: () {},
+                            onPressed: () => _showEditProfile(context, appState),
                             icon: const Icon(Icons.edit, size: 16),
                             label: const Text('Edit Profil'),
                             style: OutlinedButton.styleFrom(
@@ -260,6 +260,68 @@ class ProfileScreen extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ],
+      ),
+    );
+  }
+
+  void _showEditProfile(BuildContext context, AppState appState) {
+    final nameController = TextEditingController(text: appState.user.fullName);
+    String selectedAge = appState.user.ageRange;
+    String selectedEdu = appState.user.education;
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          title: const Text('Edit Profil', style: TextStyle(fontWeight: FontWeight.bold)),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Nama Lengkap', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey)),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text('Rentang Usia', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey)),
+                const SizedBox(height: 8),
+                DropdownButtonFormField<String>(
+                  value: selectedAge,
+                  items: ['13-17', '18-24', '25-34', '35+'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                  onChanged: (val) => setState(() => selectedAge = val!),
+                  decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+                ),
+                const SizedBox(height: 16),
+                const Text('Pendidikan', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey)),
+                const SizedBox(height: 8),
+                DropdownButtonFormField<String>(
+                  value: selectedEdu,
+                  items: ['SD', 'SMP', 'SMA', 'Sarjana', 'Pascasarjana'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                  onChanged: (val) => setState(() => selectedEdu = val!),
+                  decoration: InputDecoration(border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context), child: const Text('Batal')),
+            ElevatedButton(
+              onPressed: () {
+                appState.updateProfile(nameController.text, selectedAge, selectedEdu);
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, foregroundColor: Colors.white),
+              child: const Text('Simpan'),
+            ),
+          ],
+        ),
       ),
     );
   }

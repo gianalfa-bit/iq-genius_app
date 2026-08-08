@@ -47,17 +47,29 @@ class AppState extends ChangeNotifier {
   void startTest(TestMode mode, {CategoryType? category}) {
     _activeTestMode = mode;
     _activeCategory = category;
+
+    // Filter questions by user's age range
+    final filteredQuestions = allQuestions.where((q) => q.ageRanges.contains(_user.ageRange)).toList();
+
     // Logic to pick questions based on mode
     if (mode == TestMode.quick) {
-      _activeQuestions = allQuestions.take(15).toList();
+      _activeQuestions = (filteredQuestions..shuffle()).take(15).toList();
+      // If not enough questions for specific age, fallback to all questions
+      if (_activeQuestions.length < 5) {
+        _activeQuestions = allQuestions.take(15).toList();
+      }
     } else if (mode == TestMode.full) {
-      // Create variations or take all
       _activeQuestions = List.generate(40, (index) {
-        final q = allQuestions[index % allQuestions.length];
-        return q; // In real app, would clone with new ID
+        final q = filteredQuestions[index % filteredQuestions.length];
+        return q;
       });
+    } else if (mode == TestMode.category && category != null) {
+      _activeQuestions = filteredQuestions.where((q) => q.category == category).take(10).toList();
+      if (_activeQuestions.isEmpty) {
+        _activeQuestions = allQuestions.where((q) => q.category == category).take(10).toList();
+      }
     } else {
-      _activeQuestions = allQuestions.take(10).toList();
+      _activeQuestions = filteredQuestions.take(10).toList();
     }
     
     _viewState = ViewState.activeTest;
