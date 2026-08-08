@@ -1,6 +1,0 @@
-{
-  "name": "IQ Genius",
-  "description": "Aplikasi Penilaian Kognitif dan Tes IQ Interaktif dengan Latihan Spasial, Logika, Verbal, dan Numerik",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}

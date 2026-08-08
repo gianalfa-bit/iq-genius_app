@@ -1,8 +1,44 @@
+# Flutter-related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Android-related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradle/
+**/android/local.properties
+**/android/iq_genius_app_android.iml
+**/android/app/src/main/res/values/strings.xml
+
+# iOS/macOS-related
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.{h,m}
+**/ios/Runner/Info.plist
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flash/
+
+# IDE-related
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Node-related (remnants)
 node_modules/
-build/
 dist/
 coverage/
+
+# Others
 .DS_Store
 *.log
 .env*
-!.env.example
